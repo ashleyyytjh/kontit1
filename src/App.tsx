@@ -3,9 +3,12 @@ import './App.css';
 import { getDetails } from './services/services';
 import { Stories } from './type/type';
 import StoryBlock from './component/StoryBlock';
+
+
 function App() {
   const [data, setData] = useState<Stories[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>(0);
 
   //loading the first page
   useEffect(() => {
@@ -13,22 +16,25 @@ function App() {
       const data = await getDetails("")
       .then((data)=>{
           setData(data.data);
-// console.log(data.data);
-// console.log(data.last_page);
+          setLastPage(data.last_page)
         }
       );
     }
     fetchData();
   },[])
 
-  //function to add more data 
+  //Change page index
   async function pageChangeHandler() {
-    setPage(page+1)
-    await getDetails(`?page=${page}`)
-    .then((newData)=>{
-        setData(prevData => [...prevData, ...newData.data]);
-      }
-    );
+    //Make sure that page does not exceed max page
+    if (page+1 <= lastPage) {
+      setPage(page+1)
+      await getDetails(`?page=${page}`)
+      .then((newData)=>{
+          setData(prevData => [...prevData, ...newData.data]);
+        }
+      );
+    }
+ 
   }
 
   return (
@@ -36,21 +42,29 @@ function App() {
         {
           data && data!.map((story : Stories, index :number) => (
             <StoryBlock
+              key = {index}
               title={story.title}
               dek={story.dek}
               hero_image={story.hero_image}
-            ></StoryBlock>
-          ))
+            ></StoryBlock>))
         }
-
-    <div className='h-32 flex flex-row justify-center '>
-      <button 
-        className='rounded-2xl outline w-fit h-fit p-2 bg-slate-400 text-white font-semibold' 
-        onClick={pageChangeHandler}> 
-        load more pages 
-      </button>
-    </div>
-
+      <div className='h-32 flex flex-row justify-center '>
+        {
+        page < lastPage &&
+          <button 
+            className="rounded-2xl outline w-fit h-fit p-2 bg-slate-400 text-white font-semibold"
+            onClick={pageChangeHandler}> 
+            load more pages 
+          </button>
+        }
+        {
+          page == lastPage && 
+          <button 
+            className="rounded-2xl outline w-fit h-fit p-2 bg-slate-400 text-white font-semibold"> 
+            No more pages
+          </button>
+        }
+      </div>
     </div>
   );
 }
