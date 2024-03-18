@@ -1,25 +1,20 @@
-# Getting Started with Create React App
+## `Getting Started`
+### `Requirements`
+Nodejs is required to be installed in your environment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### `Clone the repository`
+git clone https://github.com/ashleyyytjh/kontit1
 
-## Available Scripts
+### `Install dependencies`
+npm install - This installs the neccessary libraries for the application.
 
-In the project directory, you can run:
+### `Start development server`
+npm start - Runs the app in the development mode.\
+The page will reload if you make edits.
 
-### `npm i`
 
-This installs the neccessary libraries for the application.
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `libraries used`
-TailwindCSS\
-ReactJS\
-Axios
+### `Libraries used`
+[TailwindCSS](https://tailwindcss.com/)\
+[ReactJS](https://react.dev/)\
+[Axios](https://axios-http.com/docs/intro)
 
